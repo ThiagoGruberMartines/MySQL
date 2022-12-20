@@ -179,3 +179,33 @@ WHERE titulo_livro REGEXP '^[DI]|OS'; -- Vai buscar registros que comecem com al
 
 
 
+-- CRIANDO VIEWS
+
+CREATE VIEW vw_autorlivro 
+AS SELECT livro.titulo_livro AS Titulo, 
+livro.preco_livro AS Preço, 
+autor.nome_autor AS Autor
+FROM livro
+INNER JOIN autor
+ON livro.id_autor = autor.id_autor;
+
+-- ALTERANDO VIEWS
+
+ALTER VIEW vw_autorlivro 
+AS SELECT livro.titulo_livro AS Titulo, 
+livro.preco_livro AS Preço, 
+autor.nome_autor AS Autor, autor.sobrenome_autor AS Sobrenome
+FROM livro
+INNER JOIN autor
+ON livro.id_autor = autor.id_autor;
+
+-- VISUALIZANDO VIEWS
+
+select * from vw_autorlivro;
+
+-- VISUALIZANDO A VIEW COM ORDER BY
+select * from vw_autorlivro
+ORDER BY preço; -- IRÁ ORGANIZAR A LISTA DE ACORDO COM O PREÇO
+
+
+
