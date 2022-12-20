@@ -149,3 +149,33 @@ WHERE un_livro BETWEEN 0 AND 10;
 
 
 
+-- LIKE e NOT LIKE
+select * from livro
+where titulo_livro LIKE 'O%'; -- Aparece apenas registros que se iniciam com O
+
+SELECT id_livro AS código, titulo_livro AS titulo from livro
+WHERE titulo_livro NOT LIKE 'C%'; -- Aparece apenas os registos que não se iniciam com C
+
+SELECT * FROM livro
+WHERE titulo_livro LIKE '_s sertões'; -- Completa apenas a letra que está faltando "_"
+
+
+
+
+-- Usando o REGEXP
+
+SELECT * FROM livro
+WHERE titulo_livro REGEXP '^[OC]'; -- Vai buscar registros que começam com algum caracter informado dentro do []
+
+SELECT * FROM livro
+WHERE titulo_livro REGEXP '^[^OC]'; -- Vai buscar registros que não começam com algum caracter informado dentro do []
+
+SELECT * FROM livro
+WHERE titulo_livro REGEXP '[OA]$'; -- Vai buscar registros que terminam com algum caracter informado dentro do []
+
+SELECT * FROM livro
+WHERE titulo_livro REGEXP '^[DI]|OS'; -- Vai buscar registros que comecem com algum caracter informado dentro do [] ou também algum registros que possuam uma sequencia igual a que foi citada após o |, nesse caso o OS.
+
+
+
+
