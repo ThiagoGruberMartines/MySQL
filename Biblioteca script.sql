@@ -223,5 +223,15 @@ FROM livro
 INNER JOIN autor
 ON livro.id_autor = autor.id_autor;
 
+-- UTILIZANDO O INNER JOIN JUNTO DA CLÁUSULA WHERE E BETWEEN PARA ENCONTRAR LIVROS DE 20 ATÉ 30 REAIS E SEUS RESPECTIVOS AUTORES
+
+SELECT livro.titulo_livro AS Livro, 
+livro.preco_livro AS preço,
+autor.nome_autor AS Autor, 
+autor.sobrenome_autor AS Sobrenome
+FROM livro
+INNER JOIN autor
+ON livro.id_autor = autor.id_autor
+WHERE livro.preco_livro BETWEEN 20 AND 30;
 
 
