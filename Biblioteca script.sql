@@ -47,8 +47,13 @@ insert into autor values (null,'Euclides','da Cunha');
 alter table livro add un_livro int not null;
 alter table livro change column data_pub data_pub date not null;
 
-
-
+-- Inserindo valores na tabela livro
+INSERT INTO livro VALUES (null, 'Dom casmurro', '1899-01-01', 19, 2, 15);
+INSERT INTO livro VALUES (null, 'O alienista', '1882-01-01', 22, 2, 17);
+INSERT INTO livro VALUES (null, 'Iracema', '1865-01-01', 15, 1, 22);
+INSERT INTO livro VALUES (null, 'O guarani', '1857-01-01', 17, 1, 32);
+INSERT INTO livro VALUES (null, 'Os sertões', '1902-01-01', 27, 3, 37);
+INSERT INTO livro VALUES (null, 'Constrastes e confrontos', '1907-01-01', 26, 3, 6);
 
 -- Visualização de uma tabela em ordem descrescente ou ascendente
 select * from livro
@@ -206,6 +211,17 @@ select * from vw_autorlivro;
 -- VISUALIZANDO A VIEW COM ORDER BY
 select * from vw_autorlivro
 ORDER BY preço; -- IRÁ ORGANIZAR A LISTA DE ACORDO COM O PREÇO
+
+
+
+-- UTILIZANDO INNER JOIN
+
+SELECT livro.titulo_livro AS Livro, 
+autor.nome_autor AS Autor, 
+autor.sobrenome_autor AS Sobrenome
+FROM livro
+INNER JOIN autor
+ON livro.id_autor = autor.id_autor;
 
 
 
