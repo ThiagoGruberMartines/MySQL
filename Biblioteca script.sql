@@ -194,6 +194,15 @@ FROM livro
 INNER JOIN autor
 ON livro.id_autor = autor.id_autor;
 
+CREATE VIEW vw_livrosate20
+AS SELECT livro.titulo_livro AS Livro,
+livro.preco_livro AS Preço,
+autor.nome_autor AS Autor
+FROM livro
+INNER JOIN autor
+ON livro.id_autor = autor.id_autor
+WHERE livro.preco_livro BETWEEN 10 AND 20;
+
 -- ALTERANDO VIEWS
 
 ALTER VIEW vw_autorlivro 
@@ -207,7 +216,7 @@ ON livro.id_autor = autor.id_autor;
 -- VISUALIZANDO VIEWS
 
 select * from vw_autorlivro;
-
+SELECT * FROM vw_livrosate20;
 -- VISUALIZANDO A VIEW COM ORDER BY
 select * from vw_autorlivro
 ORDER BY preço; -- IRÁ ORGANIZAR A LISTA DE ACORDO COM O PREÇO
@@ -233,5 +242,6 @@ FROM livro
 INNER JOIN autor
 ON livro.id_autor = autor.id_autor
 WHERE livro.preco_livro BETWEEN 20 AND 30;
+
 
 
