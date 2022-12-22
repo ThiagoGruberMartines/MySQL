@@ -292,7 +292,23 @@ WHERE nome_teste = 'José'; -- DESSA FORMA, SUBSTITUIMOS O VALOR NULL DURANTE O 
 -- Essa função retornará o primeiro valor não-nulo encontrado em seus argumentos
 
 SELECT CONCAT('O ', nome_teste, ' comprou um ', 
-COALESCE(NULL, item, NULL, 'PS5'))
+COALESCE(NULL, item, NULL, 'PS5')) -- IRÁ RETORNAR O PRIMEIRO VALOR QUE NÃO FOR NULO, NESSE CASO, O PS5
 FROM teste_nulo
 WHERE nome_teste = 'José';
+
+
+
+-- OPERAÇÕES ARITMÉTICAS
+	-- SOMA +
+    -- SUBTRAÇÃO -
+    -- DIVISÃO /
+    -- MULTIPLICAÇÃO *
+    -- RESTO, OQUE SOBROU DA OPERAÇÃO % ou MOD 
+    -- DIVISÃO INTEIRA	DIV
+    
+
+
+
+-- FUNÇÕES
+
 
