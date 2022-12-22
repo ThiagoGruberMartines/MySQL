@@ -312,3 +312,22 @@ WHERE nome_teste = 'José';
 -- FUNÇÕES
 
 
+CREATE FUNCTION fn_teste (a DECIMAL(10,2), b INT)
+RETURNS INT
+RETURN a * b;
+
+-- INVOCANDO A FUNÇÃO
+SELECT fn_teste(2.5, 4) AS Resultado;
+
+SELECT titulo_livro, fn_teste(preco_livro, un_livro) AS 'Valor total dos livros após vender todas unidades'
+FROM livro;
+
+
+-- PARA DELETAR A FUNÇÃO, UTILIZAMOS O DROP
+
+DROP FUNCTION fn_teste;
+
+
+
+
+-- STORED PROCEDURES
