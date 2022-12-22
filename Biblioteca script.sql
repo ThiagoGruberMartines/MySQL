@@ -245,3 +245,54 @@ WHERE livro.preco_livro BETWEEN 20 AND 30;
 
 
 
+
+-- UTILIZANDO O CONCAT PARA CONCATENAR (JUNTAR AS STRINGS)
+SELECT CONCAT('Thiago', ' Gruber Martines') AS 'Meu nome';
+
+SELECT CONCAT(nome_autor, ' ', sobrenome_autor)
+AS 'Nome Completo' FROM autor;
+
+SELECT CONCAT('Eu gosto do livro ', titulo_livro)
+FROM livro where id_autor = 2;
+
+
+
+-- CRIAREMOS AGORA UMA NOVA TABELA APENAS PARA TESTES
+create table teste_nulo (
+	id_teste int not null primary key auto_increment,
+	nome_teste varchar(50) not null,
+    item varchar(30)
+);
+
+select * from teste_nulo;
+
+INSERT INTO teste_nulo VALUES (null, 'Thiago', 'Computador');
+INSERT INTO teste_nulo VALUES (null, 'Pedro', 'Mouse');
+INSERT INTO teste_nulo VALUES (null, 'José', null);
+
+
+
+
+-- AGORA VOLTAREMOS A UTILIZAR O CONCAT, PORÉM EM UMA TABELA QUE POSSUI VALORES NULOS
+SELECT CONCAT('O ', nome_teste, ' comprou um ', item)
+FROM teste_nulo
+WHERE nome_teste = 'José'; -- Caso informemos os outros nomes, que não estão com o valor 'item' NULL, eles aparecem concatenados, porém quem está com valor NULL, aparece bugado
+-- Para corrigir esse problema, fazemos da seguinte forma:
+
+-- FUNÇÕES IFNULL e COALESCE
+
+-- IFNULL (valor, substituição)
+
+SELECT CONCAT('O ', nome_teste, ' comprou um ', 
+IFNULL(item, 'Video Game'))
+FROM teste_nulo
+WHERE nome_teste = 'José'; -- DESSA FORMA, SUBSTITUIMOS O VALOR NULL DURANTE O SELECT CONCAT
+
+-- COALESCE (valor1, valor2, ......, valorN)
+-- Essa função retornará o primeiro valor não-nulo encontrado em seus argumentos
+
+SELECT CONCAT('O ', nome_teste, ' comprou um ', 
+COALESCE(NULL, item, NULL, 'PS5'))
+FROM teste_nulo
+WHERE nome_teste = 'José';
+
