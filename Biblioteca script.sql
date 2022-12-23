@@ -329,10 +329,28 @@ FROM livro;
 
 -- PARA DELETAR A FUNÇÃO, UTILIZAMOS O DROP
 
-DROP FUNCTION fn_teste;
+--  DROP FUNCTION fn_teste;
 
 
 
+-- STORED PROCEDURE
 
--- STORED PROCEDURES
+CREATE PROCEDURE verPreco (varLivro varchar(50))
+SELECT CONCAT('O livro ', titulo_livro, ' custa ', preco_livro)
+AS Preço
+FROM livro
+WHERE titulo_livro = varLivro;
 
+
+
+-- INVOCANDO UM STORED PROCEDURE
+
+CALL verPreco('O alienista');
+CALL verPreco('O guarani');
+CALL verPreco('Contrastes e Confrontos');
+
+
+
+-- PARA DELETAR UM PROCEDURE UTILIZAMOS O DROP
+
+-- DROP PROCEDURE verPreco;
