@@ -297,6 +297,10 @@ FROM teste_nulo
 WHERE nome_teste = 'José';
 
 
+-- DELETANDO UMA TABELA
+
+DROP TABLE teste_nulo;
+
 
 -- OPERAÇÕES ARITMÉTICAS
 	-- SOMA +
@@ -331,3 +335,4 @@ DROP FUNCTION fn_teste;
 
 
 -- STORED PROCEDURES
+
