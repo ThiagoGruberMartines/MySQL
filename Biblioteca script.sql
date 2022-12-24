@@ -389,13 +389,18 @@ CREATE PROCEDURE verAutor(varLivro varchar(50))
         INNER JOIN autor
         ON livro.id_autor = autor.id_autor
         WHERE titulo_livro = varLivro;
+        SELECT 'Procedimento realizado com sucesso'; -- AQUI PASSAMOS UM SEGUNDO PROCEDIMENTO DENTRO DO BEGIN END, ASSIM, IRÁ ABRIR DUAS INTERFACES DE EXECUÇÃO, SENDO A DO PRIMEIRO E A DO SEGUNDO PROCEDIMENTO
     END//
 DELIMITER ;
 
+DROP PROCEDURE verAutor;
 
 CALL verAutor('Iracema');
 CALL verAutor('Contrastes e confrontos');
 CALL verAutor('Dom Casmurro');
+
+
+
 
 
 
