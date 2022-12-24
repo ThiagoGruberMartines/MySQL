@@ -374,7 +374,7 @@ DELIMITER ;
 SELECT * from livro;
 
 SELECT titulo_livro AS Livro, 
-aumenta_preco(preco_livro, 10) AS 'Novo Preço'
+aumenta_preco(preco_livro, 10) AS 'Sugestão de Preço'
 FROM livro;
 
 
@@ -403,4 +403,9 @@ CALL verAutor('Dom Casmurro');
 
 
 
+
+-- PARÂMETROS EM STORED PROCEDURE: 
+-- IN (padrão)
+-- OUT
+-- INOUT
 
