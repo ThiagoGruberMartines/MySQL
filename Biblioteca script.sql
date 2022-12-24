@@ -354,3 +354,48 @@ CALL verPreco('Contrastes e Confrontos');
 -- PARA DELETAR UM PROCEDURE UTILIZAMOS O DROP
 
 -- DROP PROCEDURE verPreco;
+
+
+
+
+
+
+-- BLOCOS BEGIN, END COM FUNCTIONS
+
+DELIMITER $$
+CREATE FUNCTION aumenta_preco(preco DECIMAL(10,2), taxa DECIMAL(10,2))
+	RETURNS DECIMAL(10,2)
+	BEGIN
+		RETURN preco + preco * taxa/100;
+	END$$
+DELIMITER ;
+
+
+SELECT * from livro;
+
+SELECT titulo_livro AS Livro, 
+aumenta_preco(preco_livro, 10) AS 'Novo Preço'
+FROM livro;
+
+
+-- BLOCOS BEGIN, END COM STORED PROCEDURE
+
+DELIMITER //
+CREATE PROCEDURE verAutor(varLivro varchar(50))
+	BEGIN
+		SELECT CONCAT('O autor do livro ', livro.titulo_livro, ' é ', autor.nome_autor, ' ', autor.sobrenome_autor)
+        AS 'Autor do livro:'
+        FROM livro
+        INNER JOIN autor
+        ON livro.id_autor = autor.id_autor
+        WHERE titulo_livro = varLivro;
+    END//
+DELIMITER ;
+
+
+CALL verAutor('Iracema');
+CALL verAutor('Contrastes e confrontos');
+CALL verAutor('Dom Casmurro');
+
+
+
