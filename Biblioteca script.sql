@@ -402,10 +402,46 @@ CALL verAutor('Dom Casmurro');
 
 
 
-
-
 -- PARÂMETROS EM STORED PROCEDURE: 
 -- IN (padrão)
 -- OUT
 -- INOUT
+
+
+
+-- EXEMPLO DE OUT
+DELIMITER $$
+CREATE PROCEDURE teste_out(IN codigo INT, OUT l VARCHAR(50))
+BEGIN
+	SELECT titulo_livro
+    INTO l
+    FROM livro
+    WHERE id_livro = codigo;
+END$$
+DELIMITER ;
+
+SELECT @l; -- O VALOR NESSE MOMENTO AINDA ESTAVA NULO.
+CALL teste_out(3, @l);
+SELECT @l; -- O VALOR NESSE MOMENTO PASSOU A SER O LIVRO DOM CASMURRO, LIVRO DO ID CITADO A CIMA (3).
+CALL teste_out(5, @l);
+SELECT @l; -- AGORA O VALOR DESSA VARIÁVEL PASSOU A SER O LIVRO OS SERTÕES, LIVRO DO ID CITADO A CIMA(5).
+
+
+-- EXEMPLO DE INOUT
+DELIMITER $$
+CREATE PROCEDURE aumento(INOUT valor DECIMAL(10,2), taxa DECIMAL(10,2))
+BEGIN
+	SET valor = valor + valor * taxa / 100;
+END$$
+DELIMITER ;
+-- Testando: Criamos a variável valorinicial, e a usamos para passar o parâmetro valor. Vamos aumentar o valor em 15%.
+
+SET @valorinicial = 20;
+SELECT @valorinicial;
+
+CALL aumento(@valorinicial, 15);
+-- Verificamos agora se a variável externa @valorinicial foi alterada.
+SELECT @valorinicial;
+
+
 
