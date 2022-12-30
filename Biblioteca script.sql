@@ -528,3 +528,4 @@ SELECT calcula_imposto_case(3100);
 
 
 
+-- ESTRUTURAS DE REPETIÇÃO (LOOP)
