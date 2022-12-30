@@ -475,3 +475,56 @@ SELECT * FROM livro WHERE id_livro = 4; -- AQUI NOVAMENTE TEMOS O VALOR REAL.
 
 
 
+-- BLOCOS CONDICIONAIS (IF-ELSE e CASE)
+
+-- IF
+DELIMITER $$
+CREATE FUNCTION calcula_imposto(salario DECIMAL(10,2))
+RETURNS DECIMAL(10,2)
+BEGIN
+	DECLARE valor_imposto DECIMAL(10,2);
+    IF salario < 1000 THEN
+		SET valor_imposto = 0;
+	ELSEIF salario < 2000 THEN
+		SET valor_imposto = salario * 0.15;
+	ELSEIF salario < 3000 THEN
+		SET valor_imposto = salario * 0.22;
+	ELSE
+		SET valor_imposto = salario * 0.27;
+    END IF;
+    RETURN valor_imposto;
+END$$
+DELIMITER ;
+
+SELECT calcula_imposto(800);
+SELECT calcula_imposto(1000);
+SELECT calcula_imposto(5000);
+
+
+-- CASE (ideal quando se há mais possibilidades, como por exemplo na função anterior, o ideal seria ter feito essa função com o CASE e não com IF-ELSE)
+DELIMITER $$
+CREATE FUNCTION calcula_imposto_case(salario DECIMAL(10,2))
+RETURNS DECIMAL(10,2)
+BEGIN
+	DECLARE valor_imposto DECIMAL(10,2);
+    CASE 
+    WHEN salario < 1000 THEN
+		SET valor_imposto = 0;
+	WHEN salario < 2000 THEN
+		SET valor_imposto = salario * 0.15;
+	WHEN salario < 3000 THEN
+		SET valor_imposto = salario * 0.22;
+	ELSE
+		SET valor_imposto = salario * 0.27;
+	END CASE;
+    RETURN valor_imposto;
+END$$
+DELIMITER ;
+
+SELECT calcula_imposto_case(900);
+SELECT calcula_imposto_case(1300);
+SELECT calcula_imposto_case(3100);
+
+
+
+
