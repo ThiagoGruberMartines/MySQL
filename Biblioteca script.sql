@@ -528,4 +528,52 @@ SELECT calcula_imposto_case(3100);
 
 
 
--- ESTRUTURAS DE REPETIÇÃO (LOOP)
+-- ESTRUTURAS DE REPETIÇÃO (LOOP/REPEAT/WHILE)
+
+
+-- LOOP
+
+DELIMITER $$
+CREATE PROCEDURE acumula(limite INT)
+BEGIN
+	DECLARE contador INT DEFAULT 0;
+    DECLARE soma INT DEFAULT 0;
+    loop_teste: LOOP 
+		SET contador = contador + 1;
+        SET soma = soma + contador;
+        IF contador >= limite THEN
+			LEAVE loop_teste;
+		END IF;
+	END LOOP loop_teste;
+    SELECT soma;
+END$$
+DELIMITER ;
+
+-- TESTANDO
+CALL acumula(5); -- 1 + 2 + 3 + 4 + 5 = 15
+CALL acumula(10); -- 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 = 55
+
+
+
+-- REPEAT
+
+DELIMITER $$
+    CREATE PROCEDURE acumula_repita(limite TINYINT UNSIGNED) -- QUANDO UTILIZAMOS "UNSIGNED" ESTAMOS DIZENDO QUE SOMENTE SERÁ UTILIZADOS NÚMEROS POSITIVOS
+BEGIN
+	DECLARE contador TINYINT UNSIGNED DEFAULT 0;
+    DECLARE soma INT DEFAULT 0;
+    REPEAT
+		SET contador = contador + 1;
+        SET soma = soma + contador;
+	UNTIL contador >= limite
+	END REPEAT;
+    SELECT soma;
+END$$
+DELIMITER ;
+
+-- TESTANDO A ESTRUTURA REPITA
+CALL acumula_repita(5); -- 1 + 2 + 3 + 4 + 5 = 15
+CALL acumula_repita(10); -- 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 = 55
+CALL acumula_repita(0) -- ESTE IRÁ RESULTAR EM UM VALOR ERRADO, POIS O CONTADOR É INCREMENTADO ANTES DO TESTE CONDICIONAL
+
+
