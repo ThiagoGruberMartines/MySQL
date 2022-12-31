@@ -577,3 +577,63 @@ CALL acumula_repita(10); -- 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 = 55
 CALL acumula_repita(0) -- ESTE IRÁ RESULTAR EM UM VALOR ERRADO, POIS O CONTADOR É INCREMENTADO ANTES DO TESTE CONDICIONAL
 
 
+
+
+
+
+-- REPEAT CORRIGINDO VALOR 0
+
+DELIMITER $$
+    CREATE PROCEDURE acumula_repita_corrigido (limite TINYINT UNSIGNED)
+main: BEGIN
+	DECLARE contador TINYINT UNSIGNED DEFAULT 0;
+    DECLARE soma INT DEFAULT 0;
+    IF limite < 1 THEN
+		SELECT 'O valor deve ser maior que zero!' AS Erro;
+        LEAVE main;
+	END IF;
+    REPEAT
+		SET contador = contador + 1;
+        SET soma = soma + contador;
+	UNTIL contador >= limite
+	END REPEAT;
+    SELECT soma;
+END$$
+DELIMITER ;
+
+-- TESTANDO A ESTRUTURA REPITA
+CALL acumula_repita_corrigido(5); -- 1 + 2 + 3 + 4 + 5 = 15
+CALL acumula_repita_corrigido(10); -- 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 = 55
+CALL acumula_repita_corrigido(0) -- AGORA O ERRO É REPORTADO
+
+
+
+
+
+-- WHILE (SÓ RETORNA QUANDO O VALOR FOR VERDADEIRO)
+
+DELIMITER $$
+    CREATE PROCEDURE acumula_while(limite TINYINT UNSIGNED)
+BEGIN
+	DECLARE contador TINYINT UNSIGNED DEFAULT 0;
+    DECLARE soma INT DEFAULT 0;
+    WHILE contador < limite DO
+		SET contador = contador + 1;
+        SET soma = soma + contador;
+	END WHILE;
+    SELECT soma;
+END$$
+DELIMITER ;
+
+-- TESTANDO A ESTRUTURA WHILE
+CALL acumula_while(5); 
+CALL acumula_while(10); 
+CALL acumula_while(0);
+
+
+
+
+-- LOOP, REPEAT, WHILE : ITERATE (ITERATE SÓ APARECE DENTRO DAS ESTRUTURAS DE REPETIÇÃO)
+	-- ITERATE significa dentro de uma estrutura de repetição "inicie o loop novamente"
+    
+
