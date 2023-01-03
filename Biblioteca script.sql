@@ -636,4 +636,65 @@ CALL acumula_while(0);
 -- LOOP, REPEAT, WHILE : ITERATE (ITERATE SÓ APARECE DENTRO DAS ESTRUTURAS DE REPETIÇÃO)
 	-- ITERATE significa dentro de uma estrutura de repetição "inicie o loop novamente"
     
+DELIMITER $$
+CREATE PROCEDURE acumula_iterate(limite TINYINT UNSIGNED)
+BEGIN
+	DECLARE contador INT UNSIGNED DEFAULT 0;
+    DECLARE soma TINYINT UNSIGNED DEFAULT 0;
+    teste: LOOP 
+		SET contador = contador + 1;
+        SET soma = soma + contador;
+        IF contador < limite THEN
+			ITERATE teste;	-- COMO NESSE ROTULO FOI DEFINIDO O "ITERATE", ELE IRÁ RODAR O PROGRAMA ATÉ ESSE MOMENTO ATÉ QUE O VALOR SEJA CONDIZENTE COM O IF (contador < limite)
+            END IF;
+            LEAVE teste;
+	END LOOP teste;
+    SELECT soma;
+END$$
+DELIMITER ;
+
+CALL acumula_iterate(1000)
+
+
+DELIMITER $$
+CREATE PROCEDURE pares(limite TINYINT UNSIGNED)
+main: BEGIN
+	DECLARE contador TINYINT DEFAULT 0;
+	meuloop: WHILE contador < limite DO
+		SET contador = contador + 1;
+        IF MOD(contador, 2) THEN
+			ITERATE meuloop;
+		END IF;
+        SELECT CONCAT(contador, ' é um número par') AS Valor;
+	END WHILE;
+END$$
+DELIMITER ;
+
+-- Testando
+CALL pares(9);
+
+
+
+-- TRIGGER (GATILHO)
+
+CREATE TABLE produto (
+	id_produto INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    nome_produto VARCHAR(45) NULL,
+	preco_normal DECIMAL(10,2),
+    preco_desconto DECIMAL(10,2)
+);
+
+CREATE TRIGGER tr_desconto BEFORE INSERT -- DEFINIMOS QUE O TRIGGER É BEFORE, OU SEJA, ELE VAI SER EXECUTADO ANTES DA ATIVIDADE (NESSE CASO A INSERÇÃO DOS DADOS). E APÓS ISSO, DEFINIMOS ONDE SERÁ ATUADO, NESSE CASO NO INSERT.
+ON produto
+FOR EACH ROW -- TODA LINHA EXECUTADA IRÁ ACIONAR O TRIGGER
+SET NEW.preco_desconto = (NEW.preco_normal * 0.90); -- NEW é utilizado nesse caso pois o valor ainda não existe, os dados ainda serão inseridos, porém caso o valor já exista, utiliza-se o OLD no lugar no NEW no valor existente.
+
+INSERT INTO produto (nome_produto, preco_normal) VALUES ('Monitor', 100);
+INSERT INTO produto (nome_produto, preco_normal) VALUES ('Teclado Mecânico', 150);
+INSERT INTO produto (nome_produto, preco_normal) VALUES ('Mouse', 80);
+
+SELECT * FROM produto;
+
+
+
 
