@@ -687,7 +687,7 @@ CREATE TABLE produto (
 CREATE TRIGGER tr_desconto BEFORE INSERT -- DEFINIMOS QUE O TRIGGER É BEFORE, OU SEJA, ELE VAI SER EXECUTADO ANTES DA ATIVIDADE (NESSE CASO A INSERÇÃO DOS DADOS). E APÓS ISSO, DEFINIMOS ONDE SERÁ ATUADO, NESSE CASO NO INSERT.
 ON produto
 FOR EACH ROW -- TODA LINHA EXECUTADA IRÁ ACIONAR O TRIGGER
-SET NEW.preco_desconto = (NEW.preco_normal * 0.90); -- NEW é utilizado nesse caso pois o valor ainda não existe, os dados ainda serão inseridos, porém caso o valor já exista, utiliza-se o OLD no lugar no NEW no valor existente.
+SET NEW.preco_desconto = (NEW.preco_normal * 0.90); -- NEW é utilizado nesse caso pois o valor ainda não existe, os dados ainda serão inseridos.
 
 INSERT INTO produto (nome_produto, preco_normal) VALUES ('Monitor', 100);
 INSERT INTO produto (nome_produto, preco_normal) VALUES ('Teclado Mecânico', 150);
@@ -695,6 +695,16 @@ INSERT INTO produto (nome_produto, preco_normal) VALUES ('Mouse', 80);
 
 SELECT * FROM produto;
 
+ALTER TABLE livro
+ADD COLUMN preco_desconto DECIMAL(10,2) NULL;
 
+SELECT * FROM livro; 
 
+CREATE TRIGGER tr_livro_desconto BEFORE INSERT
+ON livro
+FOR EACH ROW
+SET NEW.preco_desconto = (NEW.preco_livro * 0.90);
 
+INSERT INTO livro VALUES (NULL, 'Quincas Borba', 1891-01-01, 53.98, 2, 19, NULL); -- AQUI NOSSO TRIGGER QUE APLICA O DESCONTO JÁ ESTÁ FUNCIONANDO AO INSERIR OS DADOS COMO PODEMOS VER.
+
+SELECT * FROM livro;
